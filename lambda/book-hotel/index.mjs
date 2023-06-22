@@ -2,16 +2,33 @@ import { configDotenv } from "dotenv";
 import fetch from "node-fetch";
 configDotenv();
 
-export async function handler(_event, _context) {
+class InvalidInputError {
+  constructor(message) {
+    this.name = "InvalidInputError";
+    this.message = message;
+  }
+}
+InvalidInputError.prototype = new Error();
+
+class TransientError {
+  constructor(message) {
+    (this.name = "TransientError"), (this.message = message);
+  }
+}
+TransientError.prototype = new Error();
+
+export async function handler(event, _context) {
   const response = await fetch(`${process.env.WEBSERVICE_URL}/hotel`, {
     method: "POST",
-    body: JSON.stringify({
-      buyer_id: "mariano",
-      start_date: "2021-01-01",
-      end_date: "2021-01-02",
-      near: "tate gallery",
-    }),
+    body: JSON.stringify(event),
   });
-  const data = await response.json();
-  return data;
+  let json = await response.json();
+  if (response.ok) {
+    return json;
+  } else if (response.status == 418) {
+    throw new InvalidInputError(JSON.stringify(json));
+  } else if (response.status == 503) {
+    throw new TransientError("transient error");
+  }
+  throw new Error("Error occured");
 }
