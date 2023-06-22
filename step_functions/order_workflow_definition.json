@@ -1,15 +1,27 @@
 {
-  "Comment": "A State Machine for booking a hotel by invoking a Lambda function",
-  "StartAt": "Book Hotel",
+  "Comment": "A State Machine for booking reservations by invoking a Lambda functions",
+  "StartAt": "BookHotelState",
   "States": {
-    "Book Hotel": {
+    "BookHotelState": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:BookHotelClientS1P2",
-      "End": true,
+      "ResultPath": "$.hotel",
       "Parameters": {
         "start_date.$": "$.hotel.start_date",
         "near.$": "$.museum.name",
         "end_date.$": "$.hotel.end_date",
+        "buyer_id.$": "$.purchase.buyer_id"
+      },
+      "Next": "BookMuseumState"
+    },
+    "BookMuseumState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:BookMuseumClientS1P2",
+      "End": true,
+      "ResultPath": "$.museum",
+      "Parameters": {
+        "museum_name.$": "$.museum.name",
+        "when.$": "$.museum.when",
         "buyer_id.$": "$.purchase.buyer_id"
       }
     }
