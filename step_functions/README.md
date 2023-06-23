@@ -31,3 +31,7 @@ If the Lambda function fails due to invalid input error, the state machine execu
 
 You can find the updated state machine definition in the _order_workflow_definition.json_ file.
 The updated Lambda functions along with new CancelHotel function code are in the _lambda_ folder.
+
+## Publish an event to a SNS topic from AWS Step Functions state machine
+
+The _order_workflow_definition.json_ file contains the updated definition of a Step Functions’ state machine that publishes events into an SNS topic.
