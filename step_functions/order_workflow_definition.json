@@ -4,7 +4,7 @@
   "States": {
     "BookHotelState": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:BookHotelClientS1P2",
+      "Resource": "arn:aws:lambda:eu-north-1:xxxxxxxxxxxx:function:BookHotelClientS1P2",
       "ResultPath": "$.hotel",
       "Parameters": {
         "start_date.$": "$.hotel.start_date",
@@ -28,7 +28,7 @@
     },
     "BookMuseumState": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:BookMuseumClientS1P2",
+      "Resource": "arn:aws:lambda:eu-north-1:xxxxxxxxxxxx:function:BookMuseumClientS1P2",
       "Next": "Fallback",
       "ResultPath": "$.museum",
       "Parameters": {
@@ -52,7 +52,7 @@
     },
     "CancelHotelState": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:CancelHotelClient",
+      "Resource": "arn:aws:lambda:eu-north-1:xxxxxxxxxxxx:function:CancelHotelClient",
       "Next": "Fallback",
       "Parameters": {
         "reservation_id.$": "$.hotel.reservation_id"
