@@ -11,3 +11,7 @@
 ## Error Handling in AWS
 
 > All file references with added error handling and details can be found in the related _lambda_ and _step_functions_ directory.
+
+## Asynchrounous Architecture with SNS
+
+> All file updated references with added notification logic and workflow orchestration details can be found in the _step_functions_ directory.
