@@ -29,3 +29,22 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWS
 aws lambda create-function --function-name BookMuseum --handler index.handler --memory-size 128 --runtime nodejs18.x --role arn:aws:iam::237291935917:role/museum-role --timeout 3 --zip-file fileb://deployment.zip --publish
 
 ```
+
+## Catch Errors in Lambda Functions
+
+Two custom JavaScript errors (such as InvalidInputError and TransientError) have been created. The syntax is similar to this:
+
+```JavaScript
+function CustomError(message) {
+this.name = 'CustomError';
+this.message = message;
+}
+CustomError.prototype = new Error();
+```
+
+The response have been filtered based on the status code returned by the third-party API:
+If the return code is 200 , the JSON body has been returned. If the return code is 418 , an InvalidInputError is thrown.
+If the return code is 503, a TransientError is thrown.
+Otherwise throw a generic Error.
+
+The updated can be found on related Lambda handler projects

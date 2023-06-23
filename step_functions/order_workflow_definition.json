@@ -12,18 +12,55 @@
         "end_date.$": "$.hotel.end_date",
         "buyer_id.$": "$.purchase.buyer_id"
       },
+      "Retry": [
+        {
+          "ErrorEquals": ["TransientError"],
+          "MaxAttempts": 3
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["InvalidInputError"],
+          "Next": "Fallback"
+        }
+      ],
       "Next": "BookMuseumState"
     },
     "BookMuseumState": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:BookMuseumClientS1P2",
-      "End": true,
+      "Next": "Fallback",
       "ResultPath": "$.museum",
       "Parameters": {
         "museum_name.$": "$.museum.name",
         "when.$": "$.museum.when",
         "buyer_id.$": "$.purchase.buyer_id"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["TransientError"],
+          "MaxAttempts": 3
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.errorInfo",
+          "Next": "CancelHotelState"
+        }
+      ]
+    },
+    "CancelHotelState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:eu-north-1:237291935917:function:CancelHotelClient",
+      "Next": "Fallback",
+      "Parameters": {
+        "reservation_id.$": "$.hotel.reservation_id"
       }
+    },
+    "Fallback": {
+      "Type": "Pass",
+      "End": true
     }
   }
 }
