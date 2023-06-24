@@ -55,9 +55,7 @@
       "Resource": "arn:aws:states:::sns:publish",
       "Parameters": {
         "TopicArn": "arn:aws:sns:eu-north-1:xxxxxxxxxxxx:OrderCompletedTopic",
-        "Message": {
-          "Input": "$"
-        }
+        "Message.$": "$"
       },
       "Next": "Fallback"
     },
