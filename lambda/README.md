@@ -48,3 +48,8 @@ If the return code is 503, a TransientError is thrown.
 Otherwise throw a generic Error.
 
 The updated can be found on related Lambda handler projects
+
+## Create the Order Receipt and save it to S3
+
+A new Lambda function, _InvoicingBuilderFunction_, has been created along with related _InvoicingRole_ to generate the order receipt from the OrderCompleted SNS Topic and save it to S3.
+You can find the related code in _build-invoice_ directory.

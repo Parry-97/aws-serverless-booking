@@ -14,4 +14,7 @@
 
 ## Asynchrounous Architecture with SNS
 
-> All file updated references with added notification logic and workflow orchestration details can be found in the _step_functions_ directory.
+> All file updated references with added notification logic and workflow orchestration details can be found in the _step_functions_ and _lambda_ directories.
+
+Here is the final architecture graph:
+![Step function graph for OrderWorkflow ]("./stepfunctions_graph.svg")
